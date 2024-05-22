@@ -61,9 +61,6 @@ int Arthur::get_move(Board const& b, char turn_of)
         possible.push_back(i);
     }
 
-    // turn 2: pick 0 if center is taken
-    if (turn == 2) return 0;
-
     // turn 3 side pick: pick an adjacent corner
     if (turn == 3 && opponentFirstPosition % 2 == 1) return opponentFirstPosition < 4 ? 0 : 8;
 
