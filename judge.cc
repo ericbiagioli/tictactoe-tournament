@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "Melisa.h"
 
 #include "Player.h"
 #include "example_player.h"
@@ -44,8 +45,52 @@ int status(Board const& b)
     return NOT_ENDED;
 }
 
+bool isFull(Board const& b)
+{
+    for (int i = 0; i < 9; ++i)
+        if (b[i] == ' ')
+            return false;
+    return true;
+}
+
 int main()
 {
-    Example_player p1 = Example_player();
+     MyStrategy p = MyStrategy();
+    Board b;
+
+    //inicialiar b con espacios
+    for (int i = 0; i < 9; ++i) {
+        b[i] = ' ';
+    }
+
+    char turn_of = 'X';
+    int count = 0;
+    while (true) {
+        p.print_board(b);
+        if (count % 2 == 0) {
+            //soliciatar movimiento al usuario
+            int move;
+            std::cout << "Ingrese su movimiento: ";
+            std::cin >> move;
+            b[move] = turn_of;
+        } else {
+            //solicitar movimiento a la computadora
+            int move = p.get_move(b, turn_of);
+            b[move] = turn_of;
+        }
+        
+        if (won(b, turn_of)) {
+            p.print_board(b);
+            std::cout << "Ganador: " << turn_of << std::endl;
+            break;
+        }
+        if (isFull(b)) {
+            p.print_board(b);
+            std::cout << "Empate" << std::endl;
+            break;
+        }
+        turn_of = (turn_of == 'X') ? 'O' : 'X';
+        count++;
+    }
     return 0;
 }
