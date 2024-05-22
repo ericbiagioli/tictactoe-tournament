@@ -1,32 +1,8 @@
-#include <array>
 #include <string>
 #include <iostream>
 
-using namespace std;
-
-const int INVALID_BOTH_WON = 0;
-const int ENDED_WON_X = 1;
-const int ENDED_WON_O = 2;
-const int ENDED_NOBODY_WON = 3;
-const int NOT_ENDED = 4;
-
-
-typedef array<char, 9> Board;
-
-struct Player
-{
-    virtual int get_move(Board const&, char) = 0;
-};
-
-struct First_free : public Player
-{
-    int get_move(Board const& b, char turn_of)
-    {
-        for (int i = 0; i < 9; ++i)
-            if (b[i] == ' ')
-                return i;
-    }
-};
+#include "Player.h"
+#include "example_player.h"
 
 bool is_valid_move(Board &b, int where)
 {
@@ -70,5 +46,6 @@ int status(Board const& b)
 
 int main()
 {
+    Example_player p1 = Example_player();
     return 0;
 }
