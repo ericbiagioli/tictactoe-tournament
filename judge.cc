@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <memory>
+#include <vector>
 
 #include "Player.h"
 #include "example_player.h"
@@ -44,8 +46,51 @@ int status(Board const& b)
     return NOT_ENDED;
 }
 
+int play_game(Player *p_X, Player *p_O)
+{
+    Board b{};
+    char whomoves = 'X';
+    while (status(b) == NOT_ENDED)
+    {
+        int next_move = -1;
+        if (whomoves == 'X')
+            next_move = p_X->get_move(b, 'X');
+        else
+            next_move = p_O->get_move(b, 'O');
+
+        if (is_valid_move(b, next_move))
+            b[next_move] = whomoves;
+        else
+            return (whomoves == 'X' ? ENDED_WON_O : ENDED_WON_X);
+        whomoves = ((whomoves == 'X') ? 'O' : 'X');
+    }
+    return status(b);
+}
+
 int main()
 {
-    Example_player p1 = Example_player();
+    std::vector<Player*> players;
+    std::vector<std::string> names;
+
+    players.push_back(new Example_player());
+    names.push_back("Example_player");
+    players.push_back(new Example_player());
+    names.push_back("Example_player");
+
+    for (int i =0; i < players.size(); ++i)
+        for (int j = i + 1; j < players.size(); ++j)
+        {
+            std::cout << "Game between " << names[i] << " (X) and " << names[j] << "(O) " << std::endl;
+            int result = play_game(players[0], players[1]);
+            if (result == ENDED_NOBODY_WON)
+                std::cout << "  " << "Nobody won" << std::endl;
+            else if (result == ENDED_WON_X)
+                std::cout << "  " << "X won" << std::endl;
+            else if (result == ENDED_WON_O)
+                std::cout << "  " << "O won" << std::endl;
+            else
+                std::cout << "  " << "Not handled result" << std::endl;
+        }
+
     return 0;
 }
