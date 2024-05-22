@@ -6,6 +6,7 @@
 struct Example_player : public Player
 {
     int get_move(Board const& b, char turn_of);
+    double evaluate(Board const& b, char turn_of);
 };
 
 #endif
