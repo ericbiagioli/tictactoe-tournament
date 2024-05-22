@@ -32,7 +32,7 @@ int Cesar_player::get_move(Board const& b, char turn_of) {
 
 int Cesar_player::bestMove(Board b, int turn_of) {
     int best = -1;
-    int best_wins = -1;
+    int best_wins = -9999991;
     for (int i = 0; i < 9; ++i) {
         if (b[i] == ' ') {
             int wins = get_wins(b, turn_of, i);
@@ -46,30 +46,29 @@ int Cesar_player::bestMove(Board b, int turn_of) {
 }
 
 int Cesar_player::get_wins(Board const& b, char s, int next) {
-    char opponent = (s == 'X') ? 'O' : 'X';
     Board b_copy = b;
     b_copy[next] = s;
+    if (won(b_copy, s)) {
+        return 1;
+    }
+    char opponent = (s == 'X') ? 'O' : 'X';
     int wins = 0;
-    for (int i = 0; i < 9; ++i) { //en cual puede poner mi opponent
+    for (int i = 0; i < 9; ++i) {
         if (b_copy[i] == ' ') {
-            Board b_copy2 = b_copy;
-            b_copy2[i] = opponent;
-            //si mi oponente gana, pues wins no aumenta
-            if (!won(b_copy2, opponent)) {
-                //agregar todos mis posible movimientos
-                for (int j = 0; j < 9; ++j) {
-                    if (b_copy2[j] == ' ') {
-                        Board b_copy3 = b_copy2;
-                        b_copy3[j] = s;
-                        wins += get_wins(b_copy3, s, j);
-                    }
+            b_copy[i] = opponent;
+            if (won(b_copy, opponent)) {
+                return -1;
+            }
+            for (int j = 0; j < 9; ++j) {
+                if (b_copy[j] == ' ') {
+                    wins += get_wins(b_copy, s, j);
                 }
             }
         }
     }
-
     return wins;
 }
+
 
 bool Cesar_player::won(Board const& b, char s) {
     return

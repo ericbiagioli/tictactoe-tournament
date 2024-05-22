@@ -25,7 +25,7 @@ int main() {
     int count = 0;
     while (true) {
         std::cout << b << std::endl;
-        if (count % 2 == 0) {
+        if (count % 2 != 0) {
             //soliciatar movimiento al usuario
             int move;
             std::cout << "Ingrese su movimiento: ";
