@@ -1,58 +1,16 @@
-#include "player.h"
+#include "Player.h"
 
 struct Cesar_player : public Player
 {
-    int get_move(Board const& b, char turn_of)
-    {
-        bool is_empty = true;
-        // middle cell if the board is empty
-        for (int i = 0; i < 9; ++i) {
-            if (b[i] != ' ') {
-                is_empty = false;
-                break;
-            }
-        }
+    int get_move(Board const& b, char turn_of);
+    int bestMove(Board b, int turn_of); //busca de los 9 posibles movimientos cual es el mejor
+    int get_wins(Board const& b, char s, int next); //retorna cuantas veces gana el jugador s si juega en la posicion next
 
-        if (is_empty) return 4;
+    bool isFull(Board const& b);
 
-        // puedo ganar en el siguiente movimiento?
-        for (int i = 0; i < 9; ++i) {
-            if (b[i] == ' ') {
-                Board b_copy = b;
-                b_copy[i] = turn_of;
-                if (won(b_copy, turn_of)) {
-                    return i;
-                }
-            }
-        }
+    bool empty(Board const& b);
 
-        // el otro puede ganar?
-        char opponent = (turn_of == 'X') ? 'O' : 'X';
+    int next_inmm_wins(Board const& b, char s);
 
-        for (int i = 0; i < 9; ++i) {
-            if (b[i] == ' ') {
-                Board b_copy = b;
-                b_copy[i] = opponent;
-                if (won(b_copy, opponent)) {
-                    return i;
-                }
-            }
-        }
-
-        // usar fuerza bruta para encontrar el mejor movimiento que me da la mayor cantidad de posibilidades de ganar
-        
-    }
-
-    bool won(Board const& b, char s)
-    {
-        return
-            (b[0] == s && b[1] == s && b[2] == s) ||
-            (b[3] == s && b[4] == s && b[5] == s) ||
-            (b[6] == s && b[7] == s && b[8] == s) ||
-            (b[0] == s && b[3] == s && b[6] == s) ||
-            (b[1] == s && b[4] == s && b[7] == s) ||
-            (b[2] == s && b[5] == s && b[8] == s) ||
-            (b[0] == s && b[4] == s && b[8] == s) ||
-            (b[6] == s && b[4] == s && b[2] == s);
-    }
+    bool won(Board const& b, char s);
 };
