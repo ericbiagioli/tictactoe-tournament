@@ -3,18 +3,20 @@
 #include <array>
 #include <iostream>
 
-enum class Status { INVALID_BOTH_WON, ENDED_WON_X, ENDED_WON_O, ENDED_NOBODY_WON, NOT_ENDED };
-enum class Token { X, O, EMPTY };
 
-typedef std::array<Token, 9> Board;
 
-//override board <<
+typedef std::array<char, 9> Board;
+
+
+const int INVALID_BOTH_WON = 0;
+const int ENDED_WON_X = 1;
+const int ENDED_WON_O = 2;
+const int ENDED_NOBODY_WON = 3;
+const int NOT_ENDED = 4;
 
 struct Player
 {   
-    Token token;
-    Player(Token t) : token{t} {}
-    virtual int get_move(Board const&)=0;
+    virtual int get_move(Board const&, char token)=0;
 };
 
 #endif

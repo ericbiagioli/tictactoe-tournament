@@ -5,7 +5,8 @@
 
 struct Example_player : public Player
 {
-    int get_move(Board const& b, char turn_of);
+    Example_player() {}
+    int get_move(Board const& b, char token);
 };
 
 #endif
