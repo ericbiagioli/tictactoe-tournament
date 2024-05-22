@@ -2,16 +2,7 @@
 #include <iostream>
 
 #include "Player.h"
-
-struct First_free : public Player
-{
-    int get_move(Board const& b, char turn_of)
-    {
-        for (int i = 0; i < 9; ++i)
-            if (b[i] == ' ')
-                return i;
-    }
-};
+#include "example_player.h"
 
 bool is_valid_move(Board &b, int where)
 {
@@ -55,5 +46,6 @@ int status(Board const& b)
 
 int main()
 {
+    Example_player p1 = Example_player();
     return 0;
 }
