@@ -8,10 +8,10 @@
 
 bool is_valid_move(Board &b, int where)
 {
-    return (where >= 0 && where < 9 && b[where] == ' ');
+    return (where >= 0 && where < 9 && b[where] == Token::EMPTY);
 }
 
-bool move(Board &b, char symbol, int where)
+bool move(Board &b, Token symbol, int where)
 {
     if (!is_valid_move(b, where))
         return false;
@@ -19,31 +19,51 @@ bool move(Board &b, char symbol, int where)
     return true;
 }
 
-bool won(Board const& b, char s)
+bool won(Board const& b, Token s)
 {
-    return
-        (b[0] == s && b[1] == s && b[2] == s) ||
-        (b[3] == s && b[4] == s && b[5] == s) ||
-        (b[6] == s && b[7] == s && b[8] == s) ||
-        (b[0] == s && b[3] == s && b[6] == s) ||
-        (b[1] == s && b[4] == s && b[7] == s) ||
-        (b[2] == s && b[5] == s && b[8] == s) ||
-        (b[0] == s && b[4] == s && b[8] == s) ||
-        (b[6] == s && b[4] == s && b[2] == s);
+    for (int i = 0; i < 3; ++i)
+    {
+        if (b[i] == s && b[i + 3] == s && b[i + 6] == s)
+            return true;
+        if (b[3 * i] == s && b[3 * i + 1] == s && b[3 * i + 2] == s)
+            return true;
+    }
+    if (b[0] == s && b[4] == s && b[8] == s)
+        return true;
+    if (b[2] == s && b[4] == s && b[6] == s)
+        return true;
+    return false;
 }
 
-int status(Board const& b)
-{
-    if (won(b, 'X') && won(b, 'O')) return INVALID_BOTH_WON;
-    if (won(b, 'X')) return ENDED_WON_X;
-    if (won(b, 'O')) return ENDED_WON_O;
+
+Status status(Board const& b)
+{  
+   if (won(b, Token::X) && won(b, Token::O)) return Status::INVALID_BOTH_WON;
+    if (won(b, Token::X)) return Status::ENDED_WON_X;
+    if (won(b, Token::O)) return Status::ENDED_WON_O;
     int t = 0;
     for (int i = 0; i < 9; ++i)
-        if (b[i] == ' ')
+        if (b[i] == Token::EMPTY)
             ++t;
     if (t == 0)
-        return ENDED_NOBODY_WON;
-    return NOT_ENDED;
+        return Status::ENDED_NOBODY_WON;
+    return Status::NOT_ENDED;
+}
+
+std::ostream& operator<<(std::ostream& os, const Board& b)
+{
+    for (int i = 0; i < 9; ++i)
+    {
+        if (i % 3 == 0)
+            os << std::endl;
+        if (b[i] == Token::X)
+            os << "X ";
+        else if (b[i] == Token::O)
+            os << "O ";
+        else
+            os << ". ";
+    }
+    return os;
 }
 
 int play_game(Player *p_X, Player *p_O)
@@ -69,28 +89,33 @@ int play_game(Player *p_X, Player *p_O)
 
 int main()
 {
-    std::vector<Player*> players;
-    std::vector<std::string> names;
+    Example_player p1 = Example_player(Token::X);
+    Example_player p2 = Example_player(Token::O);
+    Board b = {
+        Token::EMPTY, Token::EMPTY, Token::EMPTY,
+        Token::EMPTY, Token::EMPTY, Token::EMPTY,
+        Token::EMPTY, Token::EMPTY, Token::EMPTY
+    };
+    Token turn_of = Token::X;
+    while (status(b) == Status::NOT_ENDED)
+    {
+        int _move = (turn_of == Token::X) ? p1.get_move(b) : p2.get_move(b);
+        if (move(b, turn_of, _move))
+            turn_of = (turn_of == Token::X) ? Token::O : Token::X;
+    }
 
-    players.push_back(new Example_player());
-    names.push_back("Example_player");
-    players.push_back(new Example_player());
-    names.push_back("Example_player");
+    std::cout << "Game final board:" << std::endl;
+    std::cout << b << std::endl;
 
-    for (int i =0; i < players.size(); ++i)
-        for (int j = i + 1; j < players.size(); ++j)
-        {
-            std::cout << "Game between " << names[i] << " (X) and " << names[j] << "(O) " << std::endl;
-            int result = play_game(players[0], players[1]);
-            if (result == ENDED_NOBODY_WON)
-                std::cout << "  " << "Nobody won" << std::endl;
-            else if (result == ENDED_WON_X)
-                std::cout << "  " << "X won" << std::endl;
-            else if (result == ENDED_WON_O)
-                std::cout << "  " << "O won" << std::endl;
-            else
-                std::cout << "  " << "Not handled result" << std::endl;
-        }
-
+    if (status(b) == Status::INVALID_BOTH_WON)
+        std::cout << "Both players won\n";
+    else if (status(b) == Status::ENDED_WON_X)
+        std::cout << "Player 1 won\n";
+    else if (status(b) == Status::ENDED_WON_O)
+        std::cout << "Player 2 won\n";
+    else if (status(b) == Status::ENDED_NOBODY_WON)
+        std::cout << "Nobody won\n";
+    
+    
     return 0;
 }
