@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "example_player.h"
 
+#include "cesar.h"
+
 bool is_valid_move(Board &b, int where)
 {
     return (where >= 0 && where < 9 && b[where] == ' ');
@@ -46,12 +48,24 @@ int status(Board const& b)
     return NOT_ENDED;
 }
 
+//sobrecarga para imprimir el tablero
+std::ostream& operator<<(std::ostream& os, Board const& b)
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        os << b[i * 3] << '|' << b[i * 3 + 1] << '|' << b[i * 3 + 2] << std::endl;
+        if (i < 2) os << "-----" << std::endl;
+    }
+    return os;
+}
+
 int play_game(Player *p_X, Player *p_O)
 {
     Board b{};
     char whomoves = 'X';
     while (status(b) == NOT_ENDED)
     {
+        std::cout << b << std::endl;
         int next_move = -1;
         if (whomoves == 'X')
             next_move = p_X->get_move(b, 'X');
@@ -67,6 +81,8 @@ int play_game(Player *p_X, Player *p_O)
     return status(b);
 }
 
+
+
 int main()
 {
     std::vector<Player*> players;
@@ -74,8 +90,8 @@ int main()
 
     players.push_back(new Example_player());
     names.push_back("Example_player");
-    players.push_back(new Example_player());
-    names.push_back("Example_player");
+    players.push_back(new Cesar_player());
+    names.push_back("Cesars_player");
 
     for (int i =0; i < players.size(); ++i)
         for (int j = i + 1; j < players.size(); ++j)

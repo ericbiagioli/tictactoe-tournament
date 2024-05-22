@@ -1,4 +1,5 @@
 #include "cesar.h"
+#include "example_player.h"
 #include <iostream>
 
 
@@ -16,6 +17,8 @@ int main() {
     Cesar_player p;
     Board b;
 
+    Example_player p2;
+
     //inicialiar b con espacios
     for (int i = 0; i < 9; ++i) {
         b[i] = ' ';
@@ -26,10 +29,8 @@ int main() {
     while (true) {
         std::cout << b << std::endl;
         if (count % 2 != 0) {
-            //soliciatar movimiento al usuario
-            int move;
-            std::cout << "Ingrese su movimiento: ";
-            std::cin >> move;
+            //solicitar movimiento al jugador
+            int move = p2.get_move(b, turn_of);
             b[move] = turn_of;
         } else {
             //solicitar movimiento a la computadora
