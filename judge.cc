@@ -1,22 +1,7 @@
-#include <array>
 #include <string>
 #include <iostream>
 
-using namespace std;
-
-const int INVALID_BOTH_WON = 0;
-const int ENDED_WON_X = 1;
-const int ENDED_WON_O = 2;
-const int ENDED_NOBODY_WON = 3;
-const int NOT_ENDED = 4;
-
-
-typedef array<char, 9> Board;
-
-struct Player
-{
-    virtual int get_move(Board const&, char) = 0;
-};
+#include "Player.h"
 
 struct First_free : public Player
 {
