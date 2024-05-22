@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "Player.h"
-#include "example_player.h"
+#include "asoldi.h"
 
 bool is_valid_move(Board &b, int where)
 {
@@ -44,8 +44,68 @@ int status(Board const& b)
     return NOT_ENDED;
 }
 
-int main()
-{
-    Example_player p1 = Example_player();
+int eva(Board const& b, char turn_of){
+    // Try to find a winning move first
+    for (int i = 0; i < 9; ++i) {
+        if (is_valid_move(const_cast<Board&>(b), i)) {
+            Board temp = b;
+            if (::move(temp, turn_of, i) && won(temp, turn_of)) {
+                return i;
+            }
+        }
+    }
+
+    // Try to block the opponent's winning move
+    char opponent = (turn_of == 'X') ? 'O' : 'X';
+    for (int i = 0; i < 9; ++i) {
+        if (is_valid_move(const_cast<Board&>(b), i)) {
+            Board temp = b;
+            if (move(temp, opponent, i) && won(temp, opponent)) {
+                return i;
+            }
+        }
+    }
+
+    // Otherwise, take the first available move
+    for (int i = 0; i < 9; ++i) {
+        if (is_valid_move(const_cast<Board&>(b), i)) {
+            return i;
+        }
+    }
+
+    // no moves are available, return an invalid move
+    return -1;
+}
+
+int main() {
+    Board b = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    char turn_of = 'X';
+    int s;
+    Example_player p;
+    while (status(b) == NOT_ENDED) {
+        s = p.get_move(b, turn_of);
+        if (is_valid_move(b, s)) {
+            move(b, turn_of, s);
+            turn_of = (turn_of == 'X') ? 'O' : 'X';
+        }
+    }
+    std::cout << "VIVO";
+    switch (status(b)) {
+        case ENDED_WON_X:
+            std::cout << "X won" << std::endl;
+            break;
+        case ENDED_WON_O:
+            std::cout << "O won" << std::endl;
+            break;
+        case ENDED_NOBODY_WON:
+            std::cout << "Nobody won" << std::endl;
+            break;
+        case INVALID_BOTH_WON:
+            std::cout << "Both won" << std::endl;
+            break;
+    }
     return 0;
 }
+
+
+
