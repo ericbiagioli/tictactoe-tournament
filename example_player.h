@@ -1,6 +1,7 @@
 #ifndef example_player_h
 #define example_player_h
 
+#include <vector>
 #include "Player.h"
 
 struct Example_player : public Player
