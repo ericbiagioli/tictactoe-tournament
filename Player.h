@@ -12,8 +12,6 @@ const int DISQUALIFIED_O = 6;
 
 typedef std::array<char, 9> Board;
 
-struct Player
-{
-    virtual int get_move(Board const&, char) = 0;
+struct Player {
+  virtual int get_move(Board const &, char) = 0;
 };
-
