@@ -1,0 +1,22 @@
+The following players did not follow the most basic implementation guidelines
+and, consequently, it was not possible to even compile the project including
+them:
+
+angelo_soldi
+
+The following players were able to compile, but produced segmentation errors
+when used. Consequently, were unable to participate in the tournament (but at
+least it was possible to compile their code) :
+
+cesar_perales
+melisa_rivera
+roger_huauya
+
+The following players have worked correctly. It was possible to compile them and
+to run them.
+
+       arthur_tadier  won: 8  lost: 0  drawn: 0
+       alvaro_garcia  won: 5  lost: 3  drawn: 0
+   juan_diego_castro  won: 5  lost: 3  drawn: 0
+      luis_izaguirre  won: 2  lost: 6  drawn: 0
+      melanie_cortez  disqualified due to invalid move

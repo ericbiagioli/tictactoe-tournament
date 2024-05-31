@@ -4,6 +4,7 @@
 
 #include "players/alvaro_garcia.h"
 #include "players/arthur_tadier.h"
+#include "players/cesar_perales.h"
 #include "players/ericbiagioli_firstfree.h"
 #include "players/ericbiagioli_incorrectmoves.h"
 #include "players/juan_diego_castro.h"
