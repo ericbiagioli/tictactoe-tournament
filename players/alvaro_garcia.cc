@@ -1,4 +1,4 @@
-#include "example_player.h"
+#include "alvaro_garcia.h"
 
 
 bool is_valid_movei(Board &b, int where)
@@ -35,7 +35,7 @@ bool is_fulli(Board const& b)
     return true;
 }
 
-double Example_player::evaluate(Board const& b, char turn_of)
+double alvaro_garcia::evaluate(Board const& b, char turn_of)
 {
     if (woni(b, turn_of))
         return 1;
@@ -62,22 +62,22 @@ double Example_player::evaluate(Board const& b, char turn_of)
     }
     return ans/t;
 }
-int Example_player::get_move(Board const& b, char turn_of)
+int alvaro_garcia::get_move(Board const& b, char turn_of)
 {
     Board b_copy = b;
     if (is_emptyi(b_copy))
         return 4;
-    
+
     int best_move = -1;
     double best_score = -10000.0;
-    
+
     for (int i = 0; i < 9; ++i)
     {
         if (b_copy[i] == ' '){
             b_copy[i] = turn_of;
             if (woni(b_copy, turn_of))
                 return i;
-            
+
             double score = evaluate(b_copy, (turn_of == 'X' ? 'O' : 'X'));
             if (score > best_score)
             {

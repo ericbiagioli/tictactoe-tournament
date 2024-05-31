@@ -1,14 +1,14 @@
-#include "LuisIZ.h"
+#include "luis_izaguirre.h"
 #include <vector>
 
 using namespace std;
 
-int LuisIzaguirre::get_move(Board const& b, char turn_of)
+int luis_izaguirre::get_move(Board const& b, char turn_of)
 {
     vector<int> memory(9,0);
     for (int i = 0; i < 9; ++i) // check table and update memory
         if (b[i] != ' '){
-            memory[i] = -1;   
+            memory[i] = -1;
         }
 
     if (memory[4] == -1) { // based on what player remember: if the center is taken, then take one of the corners (if one of these is empty)
@@ -25,6 +25,6 @@ int LuisIzaguirre::get_move(Board const& b, char turn_of)
             return i;
         }
     }
-          
+
     return -1;
 }

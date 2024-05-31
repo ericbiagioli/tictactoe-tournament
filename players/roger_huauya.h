@@ -1,13 +1,13 @@
-#ifndef example_player_h
-#define example_player_h
+#pragma once
 
 #include <vector>
 #include "Player.h"
 
-struct Example_player : public Player
+struct roger_huauya : public Player
 {
-    Example_player() {}
+    roger_huauya() {}
     int get_move(Board const& b, char token);
+    bool won2(Board const& b, char s);
+    bool can_win(Board const& b, char token, int move);
 };
 
-#endif

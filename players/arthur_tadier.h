@@ -1,11 +1,11 @@
-#ifndef arthur_player_h
-#define arthur_player_h
+#pragma once
 
 #include "Player.h"
 
-struct Arthur : public Player
+struct arthur_tadier : public Player
 {
     int get_move(Board const& b, char turn_of);
+    bool eq(char a, char b, char c, char p);
+    bool won(Board const &b, char s);
 };
 
-#endif

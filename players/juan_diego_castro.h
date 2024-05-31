@@ -1,11 +1,9 @@
-#ifndef juan_diego_player_h
-#define juan_diego_player_h
+#pragma once
 
 #include "Player.h"
 
-struct ByJuanDiego_player: public Player 
+struct juan_diego_castro: public Player
 {
     int get_move(Board const& b, char turn_of);
 };
 
-#endif

@@ -1,24 +1,20 @@
 #include <array>
 #include <vector>
 
-#include "arthur.h"
+#include "arthur_tadier.h"
 
-using namespace std;
-
-bool won(Board const& b, char s)
-{
-    return
-        (b[0] == s && b[1] == s && b[2] == s) ||
-        (b[3] == s && b[4] == s && b[5] == s) ||
-        (b[6] == s && b[7] == s && b[8] == s) ||
-        (b[0] == s && b[3] == s && b[6] == s) ||
-        (b[1] == s && b[4] == s && b[7] == s) ||
-        (b[2] == s && b[5] == s && b[8] == s) ||
-        (b[0] == s && b[4] == s && b[8] == s) ||
-        (b[6] == s && b[4] == s && b[2] == s);
+bool arthur_tadier::eq(char a, char b, char c, char p) {
+  return (a == p) && (b == p) && (c == p);
 }
 
-int Arthur::get_move(Board const& b, char turn_of)
+bool arthur_tadier::won(Board const &b, char s) {
+  return (eq(b[0], b[1], b[2], s) || eq(b[3], b[4], b[5], s) ||
+          eq(b[6], b[7], b[8], s) || eq(b[0], b[3], b[6], s) ||
+          eq(b[1], b[4], b[7], s) || eq(b[2], b[5], b[8], s) ||
+          eq(b[0], b[4], b[8], s) || eq(b[6], b[4], b[2], s));
+}
+
+int arthur_tadier::get_move(Board const& b, char turn_of)
 {
     // turn 1 and 2: pick center if possible
     if (b[4] == ' ') return 4;
@@ -26,7 +22,7 @@ int Arthur::get_move(Board const& b, char turn_of)
     char opponent = turn_of == 'X' ? 'O' : 'X';
     int turn = 1;
     int opponentFirstPosition = -1;
-    vector<int> possible = {};
+    std::vector<int> possible = {};
 
     for (int i = 0; i < 9; i++) {
         // not empty, do not consider
@@ -53,7 +49,7 @@ int Arthur::get_move(Board const& b, char turn_of)
             opponentWins |= won(modified, opponent);
             modified[j] = ' ';
         }
-        
+
         // if they win, don't play this
         if (opponentWins) continue;
 

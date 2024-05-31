@@ -1,12 +1,10 @@
-#ifndef example_player_h
-#define example_player_h
+#pragma once
 
 #include <iostream>
 #include "Player.h"
 
-struct Example_player : public Player
+struct angelo_soldi : public Player
 {
     int get_move(Board const& b, char turn_of);
 };
 
-#endif

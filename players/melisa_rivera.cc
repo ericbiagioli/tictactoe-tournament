@@ -1,8 +1,6 @@
-#include "Melisa.h"
+#include "melisa_rivera.h"
 
-using namespace std;
-
-int MyStrategy::amIinDanger(Board const& b, char turn_of)
+int melisa_rivera::amIinDanger(Board const& b, char turn_of)
 {
     //filas
     for (int i = 0; i < 9; i += 3)
@@ -43,7 +41,7 @@ int MyStrategy::amIinDanger(Board const& b, char turn_of)
     return -1;
 }
 
-int MyStrategy::get_move(Board const& b, char turn_of)
+int melisa_rivera::get_move(Board const& b, char turn_of)
 {
     char other = (turn_of == 'X') ? 'O' : 'X';
     int dangerM = amIinDanger(b, other);
@@ -63,7 +61,7 @@ int MyStrategy::get_move(Board const& b, char turn_of)
             return i;
 
 }
-bool MyStrategy::move(Board &b, char symbol, int where)
+bool melisa_rivera::move(Board &b, char symbol, int where)
 {
     if (where < 0 || where >= 9 || b[where] != ' ')
         return false;
@@ -71,19 +69,19 @@ bool MyStrategy::move(Board &b, char symbol, int where)
     return true;
 }
 
-void MyStrategy::print_board(Board const& b)
+void melisa_rivera::print_board(Board const& b)
 {
     /*
     | 6 | | 7 | | 8 |
     | 3 | | 4 | | 5 |
-    | 0 | | 1 | | 2 |    
+    | 0 | | 1 | | 2 |
     */
-    cout << " | " << b[6] << " | | " << b[7] << " | | " << b[8] << " | " << endl;
-    cout << " | " << b[3] << " | | " << b[4] << " | | " << b[5] << " | " << endl;
-    cout << " | " << b[0] << " | | " << b[1] << " | | " << b[2] << " | " << endl;
+    std::cout << " | " << b[6] << " | | " << b[7] << " | | " << b[8] << " | " << std::endl;
+    std::cout << " | " << b[3] << " | | " << b[4] << " | | " << b[5] << " | " << std::endl;
+    std::cout << " | " << b[0] << " | | " << b[1] << " | | " << b[2] << " | " << std::endl;
 }
 
-void MyStrategy::make_move(Board& b, char symbol, int where)
+void melisa_rivera::make_move(Board& b, char symbol, int where)
 {
     where = get_move(b, symbol);
     if(move(b, symbol, where))

@@ -1,6 +1,6 @@
-#include "Roger.h"
+#include "roger_huauya.h"
 
-bool won2(Board const& b, char s)
+bool roger_huauya::won2(Board const& b, char s)
 {
     return
         (b[0] == s && b[1] == s && b[2] == s) ||
@@ -13,13 +13,13 @@ bool won2(Board const& b, char s)
         (b[6] == s && b[4] == s && b[2] == s);
 }
 
-bool can_win(Board const& b, char token, int move) {
+bool roger_huauya::can_win(Board const& b, char token, int move) {
     Board temp = b;
     temp[move] = token;
     return won2(temp, token);
 }
 
-int Example_player::get_move(Board const& b, char token) {
+int roger_huauya::get_move(Board const& b, char token) {
     for (int i = 0; i < 9; ++i) {
         if (b[i] == ' ' && can_win(b, token, i)) {
             return i;
