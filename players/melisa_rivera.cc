@@ -55,7 +55,9 @@ int melisa_rivera::get_move(Board const &b, char turn_of) {
   for (int i = 0; i < 9; ++i)
     if (i % 2 == 0 && b[i] == ' ')
       return i;
+  return -1;
 }
+
 bool melisa_rivera::move(Board &b, char symbol, int where) {
   if (where < 0 || where >= 9 || b[where] != ' ')
     return false;

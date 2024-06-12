@@ -7,6 +7,7 @@
 #include "players/cesar_perales.h"
 #include "players/ericbiagioli_firstfree.h"
 #include "players/ericbiagioli_incorrectmoves.h"
+#include "players/jerimy_sandoval.h"
 #include "players/juan_diego_castro.h"
 #include "players/luis_izaguirre.h"
 #include "players/melanie_cortez.h"
