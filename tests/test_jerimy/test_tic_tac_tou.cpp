@@ -4,6 +4,7 @@
 using namespace std;
 
 jerimy_sandoval player;
+
 TEST(MinimaxTest, any_move) {
     Board b;
     b = {
